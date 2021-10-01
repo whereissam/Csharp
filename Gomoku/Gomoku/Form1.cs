@@ -13,10 +13,7 @@ namespace Gomoku
 
     public partial class 五子棋 : Form
     {
-        private Board board = new Board();
-
-        private PieceType NextPieceType = PieceType.BLACK;
-        private bool isBlack = true;
+        private Game game = new Game();
         public 五子棋()
         {
             InitializeComponent();
@@ -27,27 +24,30 @@ namespace Gomoku
         {
 
         }
-
         private void 五子棋_MouseDown(object sender, MouseEventArgs e)
         {
-            if (isBlack)
-            {
-                Piece piece = board.PlaceAPiece(e.X, e.Y, NextPieceType);
+          
+            Piece piece = game.PlaceAPiece(e.X, e.Y);
 
-                if (piece != null)
+            if (piece != null)
+            {
+                this.Controls.Add(piece);
+
+                //檢查是否有人獲勝
+                if( game.Winner == PieceType.BLACK)
                 {
-                    this.Controls.Add(piece);
-                    if (NextPieceType == PieceType.BLACK)
-                        NextPieceType = PieceType.WHITE;
-                    else if (NextPieceType == PieceType.WHITE)
-                        NextPieceType = PieceType.BLACK;
+                    MessageBox.Show("黑色獲勝");
+                }
+                else if( game.Winner == PieceType.WHITE)
+                {
+                    MessageBox.Show("白色獲勝");
                 }
             }
         }
 
         private void 五子棋_MouseMove(object sender, MouseEventArgs e)
         {
-            if(board.CanBePlaced(e.X, e.Y))
+            if(game.CanBePlaced(e.X, e.Y))
             {
                 this.Cursor = Cursors.Hand;
             }
