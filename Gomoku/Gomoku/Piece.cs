@@ -16,5 +16,7 @@ namespace Gomoku
             this.Size = new Size(IMAGE_WIDTH, IMAGE_WIDTH);
             Console.WriteLine(this.Location);
         }
+
+        public abstract PieceType GetPieceType();
     }
 }
